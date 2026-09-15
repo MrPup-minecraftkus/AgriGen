@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:hopper"
+    },
+    "M": {
+      "item": "minecraft:crafter"
+    },
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "SMS",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:craft_synthesizer"
+  }
+}

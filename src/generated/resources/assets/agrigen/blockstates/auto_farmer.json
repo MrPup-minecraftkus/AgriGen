@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "agrigen:block/auto_farmer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "agrigen:block/auto_farmer"
+    },
+    "facing=south": {
+      "model": "agrigen:block/auto_farmer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "agrigen:block/auto_farmer",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "agrigen:craft_synthesizer",
+  "fluid_input": {
+    "amount": 1000,
+    "fluid": "minecraft:water"
+  },
+  "input_1": {
+    "item": "minecraft:fermented_spider_eye"
+  },
+  "input_2": {
+    "item": "minecraft:blaze_powder"
+  },
+  "input_3": {
+    "item": "minecraft:gunpowder"
+  },
+  "input_4": {
+    "item": "minecraft:iron_ingot"
+  },
+  "output": {
+    "count": 1,
+    "id": "agrigen:herbicide"
+  }
+}

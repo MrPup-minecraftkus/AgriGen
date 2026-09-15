@@ -1,0 +1,87 @@
+package com.mrpup.agrigen.plugin.agriculture;
+
+import com.blakebr0.mysticalagriculture.lib.ModCrops;
+import com.mrpup.agrigen.genetics.GenomeDefaults;
+
+public class GenomeDefaultsAgriculture {
+
+    public static void bootstrap() {
+        GenomeDefaults.registerSeed(ModCrops.AIR.getSeedsItem(), 8, 2, 2, 1, -2, 2);
+        GenomeDefaults.registerSeed(ModCrops.EARTH.getSeedsItem(), 3, 8, 6, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.WATER.getSeedsItem(), 5, 4, 5, 0, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.FIRE.getSeedsItem(), 6, 5, 3, 1, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.INFERIUM.getSeedsItem(), 4, 5, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.STONE.getSeedsItem(), 2, 9, 3, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.DIRT.getSeedsItem(), 6, 3, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.WOOD.getSeedsItem(), 5, 6, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.ICE.getSeedsItem(), 2, 4, 3, 2, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.DEEPSLATE.getSeedsItem(), 2, 10, 3, 2, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.NATURE.getSeedsItem(), 7, 5, 6, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.DYE.getSeedsItem(), 5, 3, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.NETHER.getSeedsItem(), 4, 6, 4, 2, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.COAL.getSeedsItem(), 3, 6, 4, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.CORAL.getSeedsItem(), 4, 3, 3, 0, 0, 2);
+        GenomeDefaults.registerSeed(ModCrops.HONEY.getSeedsItem(), 6, 4, 5, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.AMETHYST.getSeedsItem(), 3, 7, 3, 2, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.PIG.getSeedsItem(), 5, 3, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.CHICKEN.getSeedsItem(), 6, 2, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.COW.getSeedsItem(), 4, 4, 5, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SHEEP.getSeedsItem(), 5, 3, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SQUID.getSeedsItem(), 3, 3, 3, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.FISH.getSeedsItem(), 4, 3, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SLIME.getSeedsItem(), 5, 4, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.TURTLE.getSeedsItem(), 2, 8, 3, 1, 0, 2);
+        GenomeDefaults.registerSeed(ModCrops.ARMADILLO.getSeedsItem(), 2, 9, 3, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.IRON.getSeedsItem(), 3, 7, 4, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.COPPER.getSeedsItem(), 4, 6, 4, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.NETHER_QUARTZ.getSeedsItem(), 3, 6, 3, 2, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.GLOWSTONE.getSeedsItem(), 4, 5, 4, 2, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.REDSTONE.getSeedsItem(), 5, 5, 5, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.OBSIDIAN.getSeedsItem(), 1, 12, 2, 0, -2, 2);
+        GenomeDefaults.registerSeed(ModCrops.PRISMARINE.getSeedsItem(), 3, 6, 3, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SCULK.getSeedsItem(), 2, 8, 3, 2, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.ZOMBIE.getSeedsItem(), 4, 5, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SKELETON.getSeedsItem(), 3, 5, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.CREEPER.getSeedsItem(), 5, 4, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SPIDER.getSeedsItem(), 4, 4, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.PHANTOM.getSeedsItem(), 3, 4, 3, 2, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.RABBIT.getSeedsItem(), 7, 2, 4, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.GOLD.getSeedsItem(), 3, 5, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.LAPIS_LAZULI.getSeedsItem(), 3, 5, 4, 0, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.END.getSeedsItem(), 2, 10, 3, 0, -2, 2);
+        GenomeDefaults.registerSeed(ModCrops.EXPERIENCE.getSeedsItem(), 6, 6, 5, 1, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.BREEZE.getSeedsItem(), 5, 4, 3, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.BLAZE.getSeedsItem(), 4, 6, 4, 1, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.GHAST.getSeedsItem(), 3, 5, 3, 2, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.ENDERMAN.getSeedsItem(), 3, 6, 3, 2, -2, 2);
+        GenomeDefaults.registerSeed(ModCrops.DIAMOND.getSeedsItem(), 2, 10, 5, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.EMERALD.getSeedsItem(), 3, 8, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.NETHERITE.getSeedsItem(), 1, 15, 3, 1, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.WITHER_SKELETON.getSeedsItem(), 2, 8, 3, 2, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.RUBBER.getSeedsItem(), 6, 4, 6, 1, 0, 2);
+        GenomeDefaults.registerSeed(ModCrops.SILICON.getSeedsItem(), 4, 6, 4, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.SULFUR.getSeedsItem(), 4, 5, 4, 1, 1, 2);
+        GenomeDefaults.registerSeed(ModCrops.ALUMINUM.getSeedsItem(), 5, 5, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SALTPETER.getSeedsItem(), 5, 4, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.TIN.getSeedsItem(), 4, 5, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.BRONZE.getSeedsItem(), 3, 6, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.ZINC.getSeedsItem(), 4, 5, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.BRASS.getSeedsItem(), 3, 6, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SILVER.getSeedsItem(), 3, 6, 5, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.LEAD.getSeedsItem(), 2, 7, 4, 0, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.GRAPHITE.getSeedsItem(), 3, 6, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.STEEL.getSeedsItem(), 2, 9, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.NICKEL.getSeedsItem(), 3, 6, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.CONSTANTAN.getSeedsItem(), 3, 6, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.ELECTRUM.getSeedsItem(), 3, 6, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.INVAR.getSeedsItem(), 3, 7, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.URANIUM.getSeedsItem(), 1, 9, 3, 2, -2, 1);
+        GenomeDefaults.registerSeed(ModCrops.PLATINUM.getSeedsItem(), 2, 9, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.IRIDIUM.getSeedsItem(), 1, 11, 4, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.APATITE.getSeedsItem(), 5, 4, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.RUBY.getSeedsItem(), 3, 8, 5, 0, 0, 2);
+        GenomeDefaults.registerSeed(ModCrops.SAPPHIRE.getSeedsItem(), 3, 8, 5, 0, -2, 0);
+        GenomeDefaults.registerSeed(ModCrops.PERIDOT.getSeedsItem(), 3, 7, 5, 0, -1, 1);
+        GenomeDefaults.registerSeed(ModCrops.SOULIUM.getSeedsItem(), 2, 8, 3, 2, -2, 2);
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ASA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:blank_upgrade"
+  }
+}

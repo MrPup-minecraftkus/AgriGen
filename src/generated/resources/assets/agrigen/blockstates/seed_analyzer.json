@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "agrigen:block/seed_analyzer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "agrigen:block/seed_analyzer"
+    },
+    "facing=south": {
+      "model": "agrigen:block/seed_analyzer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "agrigen:block/seed_analyzer",
+      "y": 270
+    }
+  }
+}

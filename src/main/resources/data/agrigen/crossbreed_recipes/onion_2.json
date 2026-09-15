@@ -1,0 +1,6 @@
+{
+  "parent1": "minecraft:carrot",
+  "parent2": "minecraft:cabbage_seeds",
+  "result": "farmersdelight:onion",
+  "chance": 20
+}

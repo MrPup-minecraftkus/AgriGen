@@ -1,0 +1,6 @@
+{
+  "parent1": "minecraft:wheat_seeds",
+  "parent2": "minecraft:azure_bluet",
+  "result": "farmersdelight:rice",
+  "chance": 25
+}

@@ -1,0 +1,72 @@
+{
+  "itemgroup.agrigen.agrigen": "AgriGen",
+
+  "item.agrigen.speed_upgrade_1": "Speed Upgrade 1",
+  "item.agrigen.speed_upgrade_2": "Speed Upgrade 2",
+  "item.agrigen.speed_upgrade_3": "Speed Upgrade 3",
+  "item.agrigen.efficiency_upgrade_1": "Efficiency Upgrade 1",
+  "item.agrigen.efficiency_upgrade_2": "Efficiency Upgrade 2",
+  "item.agrigen.efficiency_upgrade_3": "Efficiency Upgrade 3",
+  "item.agrigen.radius_upgrade_1": "Radius Upgrade 1",
+  "item.agrigen.radius_upgrade_2": "Radius Upgrade 2",
+  "item.agrigen.radius_upgrade_3": "Radius Upgrade 3",
+  "item.agrigen.blank_upgrade": "Blank Upgrade",
+  "item.agrigen.blank_gene_sample": "Blank Gene Sample",
+  "item.agrigen.gene_sample": "Gene Sample",
+  "item.agrigen.genetic_template": "Genetic Template",
+  "item.agrigen.herbicide": "Herbicide",
+  "item.agrigen.liquid_dna_bucket": "Liquid DNA Bucket",
+  "item.agrigen.genetic_waste": "Genetic Waste",
+  "item.agrigen.fertilizer": "Fertilizer",
+
+  "upgrade.agrigen.radius": "Radius increases by ",
+  "upgrade.agrigen.radius.bonus": "%s",
+
+  "fluid.agrigen.liquid_dna": "Liquid DNA",
+
+  "block.agrigen.crop_stick": "Crop Stick",
+  "block.agrigen.seed_analyzer": "Seed Analyzer",
+  "block.agrigen.electric_seed_analyzer": "Electric Seed Analyzer",
+  "block.agrigen.gene_extractor": "Gene Extractor",
+  "block.agrigen.gene_importer": "Gene Importer",
+  "block.agrigen.plant_synthesizer": "Plant Synthesizer",
+  "block.agrigen.dna_extractor": "DNA Extractor",
+  "block.agrigen.craft_synthesizer": "Craft Synthesizer",
+  "block.agrigen.auto_farmer": "Auto Farmer",
+
+  "item.agrigen.radius_upgrade_1.desc": "Radius increases by 3",
+  "item.agrigen.radius_upgrade_2.desc": "Radius increases by 5",
+  "item.agrigen.radius_upgrade_3.desc": "Radius increases by 7",
+
+  "tooltip.agrigen.gene_blank_header": "Gene Sample:",
+
+  "tooltip.agrigen.genome_header": "Genome:",
+  "tooltip.agrigen.gene_resistance": "Resistance: %s",
+  "tooltip.agrigen.gene_grow_speed": "Growth Speed: %s",
+  "tooltip.agrigen.gene_yield": "Yield: %s",
+  "tooltip.agrigen.gene_time_any": "Grows: Day & Night",
+  "tooltip.agrigen.gene_time_day": "Grows: Day only",
+  "tooltip.agrigen.gene_time_night": "Grows: Night only",
+  "tooltip.agrigen.gene_temp_min": "Cold: %s",
+  "tooltip.agrigen.gene_temp_max": "Heat: +%s",
+  "tooltip.agrigen.gene_species": "Species: %s",
+  "tooltip.agrigen.hold_shift": "Hold [SHIFT] to view genome",
+
+  "tooltip.agrigen.none": "Effect: None",
+  "tooltip.agrigen.solitary": "Effect: Solitary",
+  "tooltip.agrigen.social": "Effect: Social",
+  "tooltip.agrigen.parasitic": "Effect: Parasitic",
+  "tooltip.agrigen.solar": "Effect: Solar",
+  "tooltip.agrigen.nocturnal": "Effect: Nocturnal",
+  "tooltip.agrigen.poisonous": "Effect: Poisonous",
+
+
+  "tooltip.agrigen.fluid_info": "Fluid: %s",
+
+  "jade.agrigen.stage": "Stage: %s / %s",
+  "jade.agrigen.remaining": "%s",
+  "jade.agrigen.ready": "Ready to Harvest",
+  "jade.agrigen.weed": "Weed",
+
+  "jei.agrigen.crossbreed": "Crossbreed"
+}

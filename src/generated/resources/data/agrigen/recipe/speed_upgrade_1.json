@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "B": {
+      "item": "minecraft:sugar"
+    },
+    "S": {
+      "item": "agrigen:blank_upgrade"
+    }
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:speed_upgrade_1"
+  }
+}

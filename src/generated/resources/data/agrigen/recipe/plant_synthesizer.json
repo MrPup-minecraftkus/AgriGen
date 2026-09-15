@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:redstone"
+    },
+    "M": {
+      "item": "agrigen:genetic_template"
+    },
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:crafter"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "PMP",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:plant_synthesizer"
+  }
+}

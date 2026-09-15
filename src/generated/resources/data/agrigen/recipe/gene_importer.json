@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:hopper"
+    },
+    "M": {
+      "item": "agrigen:blank_gene_sample"
+    },
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "PMP",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:gene_importer"
+  }
+}

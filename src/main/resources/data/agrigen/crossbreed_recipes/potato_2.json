@@ -1,0 +1,6 @@
+{
+  "parent1": "minecraft:beetroot_seeds",
+  "parent2": "minecraft:pumpkin_seeds",
+  "result": "minecraft:potato",
+  "chance": 15
+}

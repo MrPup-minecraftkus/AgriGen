@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:bucket"
+    },
+    "M": {
+      "item": "minecraft:diamond_hoe"
+    },
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "MSM",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agrigen:auto_farmer"
+  }
+}
