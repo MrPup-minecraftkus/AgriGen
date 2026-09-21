@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrpup.agrigen.AgriGen;
 import com.mrpup.agrigen.block.crop.entity.CropStickBlockEntity;
 import com.mrpup.agrigen.plant.PlantRegistry;
+import com.mrpup.clumapi.helper.ItemHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -11,7 +12,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
@@ -276,7 +276,7 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
     private Item resolveItem(String seedId) {
         try {
             ResourceLocation itemId = ResourceLocation.parse(seedId);
-            return BuiltInRegistries.ITEM.get(itemId);
+            return ItemHelper.getItemFromLoc(itemId);
         } catch (Exception e) {
             return null;
         }

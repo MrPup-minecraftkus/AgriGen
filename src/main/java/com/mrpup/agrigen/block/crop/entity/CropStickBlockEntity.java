@@ -46,6 +46,8 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
     private int growthTicks = 0;
     private int fruitTicks = 0;
 
+    private float fertilizerBonus = 1f;
+
     public CropStickBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.CROP_STICK.getBlockEntityType(), pos, state);
     }
@@ -58,13 +60,26 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
             entity.seedId = entity.speciesId;
 
             if (canGrowNow(level, pos, entity)) {
-                entity.growthTicks++;
                 entity.setChanged();
 
                 if (entity.hasFertilizer()) {
-                    entity.growthTicks++;
+                    entity.fertilizerBonus = 2f;
                     entity.setFertilizer(-1);
                     entity.setChanged();
+                }
+
+                float growSpeedEffect = entity.getGrowSpeedBonusFromGene() * entity.effectGrowthMultiplier *  entity.fertilizerBonus;
+
+                while (growSpeedEffect > 0) {
+                    if (growSpeedEffect >= 1.0f) {
+                        entity.growthTicks++;
+                        growSpeedEffect -= 1.0f;
+                    } else {
+                        if (Math.random() < growSpeedEffect) {
+                            entity.growthTicks++;
+                        }
+                        break;
+                    }
                 }
 
                 if (entity.isFullyGrown()) {
@@ -214,7 +229,7 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
     }
 
     public boolean hasMaxFertilizer() {
-        return this.fertilizer > 16000;
+        return this.fertilizer > 24000;
     }
 
     public boolean hasSeed() {
@@ -237,6 +252,10 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
         return this.growSpeed;
     }
 
+    public float getGrowSpeedBonusFromGene() {
+        return (float) this.growSpeed / 3;
+    }
+
     public void setGrowthTicks(int ticks) {
         this.growthTicks = ticks;
         this.setChanged();
@@ -247,8 +266,7 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
     }
 
     public int getTicksPerStage() {
-        int base = TICKS_PER_STAGE / Math.max(1, getGrowSpeed() / 3);
-        return Math.max(1, Math.round(base * effectGrowthMultiplier));
+        return TICKS_PER_STAGE;
     }
 
     public int getStage() {
@@ -301,6 +319,7 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
 
     public void setHerbicide(int val) {
         this.herbicide = val;
+        this.setChanged();
     }
 
     public String getCropStickVariant() {

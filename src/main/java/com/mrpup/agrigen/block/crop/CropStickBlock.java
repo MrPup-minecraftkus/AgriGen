@@ -8,10 +8,11 @@ import com.mrpup.agrigen.plant.PlantRegistry;
 import com.mrpup.agrigen.genetics.GenomeDefaults;
 import com.mrpup.agrigen.item.ModItems;
 import com.mrpup.clumapi.blocks.ComponentBlock;
+import com.mrpup.clumapi.helper.BlockHelper;
+import com.mrpup.clumapi.helper.ItemHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -85,7 +86,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
                             cropEntity.setGenome(defaultGenome);
                         }
 
-                        String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+                        String id = ItemHelper.getItemName(stack.getItem());
                         cropEntity.setSeed(id);
                         stack.shrink(1);
                     }
@@ -108,23 +109,19 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
         }
 
         if (item.is(ModItems.HERBICIDE.item())) {
-            if (!level.isClientSide) {
-                if (blockEntity instanceof CropStickBlockEntity cropEntity) {
-                    if (cropEntity.isWeed()) return ItemInteractionResult.FAIL;
-                    if (cropEntity.hasHerbicide()) {
-                        if (cropEntity.hasMaxHerbicide()) {
-                            return ItemInteractionResult.FAIL;
-                        } else {
-                            item.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-                            cropEntity.setHerbicide(3);
-                        }
-                    } else {
-                        item.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-                        cropEntity.setHerbicide(3);
-                    }
+            if (blockEntity instanceof CropStickBlockEntity cropEntity) {
+                if (cropEntity.isWeed()) {
+                    return ItemInteractionResult.FAIL;
                 }
+                if (cropEntity.hasHerbicide() && cropEntity.hasMaxHerbicide()) {
+                    return ItemInteractionResult.FAIL;
+                }
+                if (!level.isClientSide) {
+                    player.getItemBySlot(EquipmentSlot.MAINHAND).hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                    cropEntity.setHerbicide(3);
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (item.is(ModItems.FERTILIZER.item())) {
@@ -203,7 +200,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
         int yieldBonus = cropEntity.getYield() / 3;
 
         ResourceLocation itemId = ResourceLocation.parse(seedId);
-        Item seedItem = BuiltInRegistries.ITEM.get(itemId);
+        Item seedItem = ItemHelper.getItemFromLoc(itemId);
         ItemStack seedStack = new ItemStack(seedItem);
 
         if (PlantRegistry.isStackingPlant(seedItem)) {
@@ -298,7 +295,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
     }
 
     private Block resolveRelatedBlock(Block saplingBlock, String fromSuffix, String toSuffix) {
-        ResourceLocation saplingId = BuiltInRegistries.BLOCK.getKey(saplingBlock);
+        ResourceLocation saplingId = BlockHelper.getBlockKey(saplingBlock);
         if (saplingId == null) {
             return null;
         }
@@ -311,7 +308,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
         String basePath = path.substring(0, path.length() - fromSuffix.length());
         ResourceLocation candidateId = ResourceLocation.fromNamespaceAndPath(saplingId.getNamespace(), basePath + toSuffix);
 
-        Block candidate = BuiltInRegistries.BLOCK.get(candidateId);
+        Block candidate = BlockHelper.getBlockFromLoc(candidateId);
         return candidate != Blocks.AIR ? candidate : null;
     }
 

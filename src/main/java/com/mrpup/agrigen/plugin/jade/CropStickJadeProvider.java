@@ -48,9 +48,8 @@ public enum CropStickJadeProvider implements IBlockComponentProvider, IServerDat
         }
 
         int ticksIntoStage = growthTicks - stage * ticksPerStage;
-        float progress = ticksPerStage > 0
-                ? Math.min(1f, Math.max(0f, ticksIntoStage / (float) ticksPerStage))
-                : 0f;
+        if (stage == 1) ticksIntoStage = growthTicks;
+        float progress = ticksPerStage > 0 ? Math.min(1f, Math.max(0f, ticksIntoStage / (float) ticksPerStage)) : 0f;
 
         data.putBoolean("fullyGrown", false);
         data.putFloat("progressToNext", progress);

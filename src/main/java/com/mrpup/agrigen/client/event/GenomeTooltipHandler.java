@@ -2,10 +2,10 @@ package com.mrpup.agrigen.client.event;
 
 import com.mrpup.agrigen.AgriGen;
 import com.mrpup.agrigen.plant.AllHelper;
+import com.mrpup.clumapi.helper.ItemHelper;
+import com.mrpup.clumapi.helper.PlayerHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ public class GenomeTooltipHandler {
 
         List<Component> tooltip = event.getToolTip();
 
-        if (!Screen.hasShiftDown()) {
+        if (!PlayerHelper.hasShiftDown()) {
             tooltip.add(Component.translatable("tooltip.agrigen.hold_shift")
                     .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
             return;
@@ -54,10 +54,8 @@ public class GenomeTooltipHandler {
             ResourceLocation loc = ResourceLocation.tryParse(speciesId);
 
             if (loc != null) {
-                Item item = BuiltInRegistries.ITEM.get(loc);
-                if (item != BuiltInRegistries.ITEM.get(BuiltInRegistries.ITEM.getDefaultKey())) {
-                    return Component.translatable("tooltip.agrigen.gene_species", item.getDescription());
-                }
+                Item item = ItemHelper.getItemFromLoc(loc);
+                return Component.translatable("tooltip.agrigen.gene_species", item.getDescription());
             }
             return Component.translatable("tooltip.agrigen.gene_species", speciesId);
         }
