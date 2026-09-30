@@ -4,7 +4,6 @@ import com.mrpup.agrigen.block.ModBlocks;
 import com.mrpup.agrigen.block.crop.entity.CropStickBlockEntity;
 import com.mrpup.agrigen.plant.AllHelper;
 import com.mrpup.agrigen.plant.PlantDropHelper;
-import com.mrpup.agrigen.plant.PlantRegistry;
 import com.mrpup.agrigen.genetics.GenomeDefaults;
 import com.mrpup.agrigen.item.ModItems;
 import com.mrpup.clumapi.blocks.ComponentBlock;
@@ -47,7 +46,6 @@ import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> implements EntityBlock, BonemealableBlock {
@@ -175,16 +173,12 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
     }
 
     public ItemStack getGenomeSeed(CropStickBlockEntity cropEntity, Item seedItem) {
-        Random random = new Random();
-        int randomValue = random.nextInt(4);
-
+        int randomValue = (int) (Math.random() * 2) + 1;
         ItemStack stack = new ItemStack(seedItem, randomValue);
 
-        CompoundTag genomeTag = cropEntity.getGenome();
         CompoundTag seedTag = new CompoundTag();
-
         seedTag.putString("seedId", cropEntity.getSeedId());
-        seedTag.put("genome", genomeTag);
+        seedTag.put("genome", cropEntity.getGenome());
 
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(seedTag));
 
@@ -196,58 +190,41 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
     }
 
     public void harvest(CropStickBlockEntity cropEntity, ServerLevel level, BlockPos pos, Consumer<ItemStack> output) {
-        String seedId = cropEntity.getSeedId();
-        int yieldBonus = cropEntity.getYield() / 3;
+        Item seedItem = ItemHelper.getItemFromString(cropEntity.getSeedId());
+        int yieldBonus = cropEntity.getYield();
 
-        ResourceLocation itemId = ResourceLocation.parse(seedId);
-        Item seedItem = ItemHelper.getItemFromLoc(itemId);
-        ItemStack seedStack = new ItemStack(seedItem);
-
-        if (PlantRegistry.isStackingPlant(seedItem)) {
-            harvestStackingPlant(cropEntity, level, pos, seedItem, output);
-            cropEntity.setFullyGrown(false);
-            cropEntity.setGrowthTicks(0);
-            return;
+        if (AllHelper.isStackingPlant(seedItem)) {
+            harvestStackingPlant(seedItem, yieldBonus, output);
+        } else if (AllHelper.isMushroom(seedItem)) {
+            harvestMushroom(level, pos, seedItem, yieldBonus, output);
+        } else if (AllHelper.isSapling(seedItem)) {
+            harvestSapling(level, pos, seedItem, yieldBonus, output);
+        } else {
+            harvestCrop(level, pos, seedItem, yieldBonus, output);
         }
 
-        if (PlantRegistry.isMushroom(seedItem)) {
-            harvestMushroom(cropEntity, level, pos, seedItem, yieldBonus, output);
-            cropEntity.setFullyGrown(false);
-            cropEntity.setGrowthTicks(0);
-            return;
-        }
-
-        if (PlantRegistry.isSapling(seedItem.getDefaultInstance())) {
-            harvestSapling(cropEntity, level, pos, seedItem, yieldBonus, output);
-            cropEntity.setFullyGrown(false);
-            cropEntity.setGrowthTicks(0);
-            return;
-        }
-
-        List<ItemStack> drops = PlantDropHelper.getHarvestDrops(level, seedStack, pos);
-
-        for (ItemStack drop : drops) {
-            if (drop.is(Tags.Items.SEEDS) || drop.is(Items.NETHER_WART)) {
-                continue;
-            }
-
-            int totalCount = drop.getCount() * yieldBonus;
-
-            while (totalCount > 0) {
-                int stackSize = Math.min(totalCount, drop.getMaxStackSize());
-                output.accept(drop.copyWithCount(stackSize));
-                totalCount -= stackSize;
-            }
-        }
-
-        ItemStack dropSeed = getGenomeSeed(cropEntity, seedItem);
-        output.accept(dropSeed);
+        output.accept(getGenomeSeed(cropEntity, seedItem));
 
         cropEntity.setFullyGrown(false);
         cropEntity.setGrowthTicks(0);
     }
 
-    private void harvestSapling(CropStickBlockEntity cropEntity, ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
+    private void harvestCrop(ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
+        for (ItemStack drop : PlantDropHelper.getHarvestDrops(level, new ItemStack(seedItem), pos)) {
+            if (drop.is(Tags.Items.SEEDS) || drop.is(Items.NETHER_WART)) continue;
+            outputSplit(drop, 1 + yieldBonus, output);
+        }
+    }
+
+    private void outputSplit(ItemStack drop, int total, Consumer<ItemStack> output) {
+        while (total > 0) {
+            int size = Math.min(total, drop.getMaxStackSize());
+            output.accept(drop.copyWithCount(size));
+            total -= size;
+        }
+    }
+
+    private void harvestSapling(ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
         if (!(seedItem instanceof BlockItem blockItem) || !(blockItem.getBlock() instanceof SaplingBlock saplingBlock)) {
             return;
         }
@@ -259,17 +236,13 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
             logBlock = Blocks.OAK_LOG;
         }
 
-        int logCount = 3 + (yieldBonus * yieldBonus / 3);
+        int logCount = 6 + yieldBonus;
         dropLootFromBlock(level, pos, logBlock.defaultBlockState(), logCount, output);
 
         if (leavesBlock != null) {
-            int leavesCount = 4 * (yieldBonus * yieldBonus / 3);
+            int leavesCount = yieldBonus * yieldBonus;
             dropLootFromBlock(level, pos, leavesBlock.defaultBlockState(), leavesCount, output);
         }
-
-        ItemStack saplingBack = getGenomeSeed(cropEntity, seedItem);
-        saplingBack.setCount(Math.max(1, saplingBack.getCount()));
-        output.accept(saplingBack);
     }
 
     private void dropLootFromBlock(ServerLevel level, BlockPos pos, BlockState state, int repetitions, Consumer<ItemStack> output) {
@@ -312,7 +285,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
         return candidate != Blocks.AIR ? candidate : null;
     }
 
-    private void harvestMushroom(CropStickBlockEntity cropEntity, ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
+    private void harvestMushroom(ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
         ItemStack seedStack = new ItemStack(seedItem);
         List<ItemStack> drops = PlantDropHelper.getHarvestDrops(level, seedStack, pos);
 
@@ -328,24 +301,10 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
                 totalCount -= stackSize;
             }
         }
-
-        int plainCount = yieldBonus;
-        if (plainCount > 0) {
-            ItemStack geneticSeed = getGenomeSeed(cropEntity, seedItem);
-            output.accept(geneticSeed);
-        }
     }
 
-    private void harvestStackingPlant(CropStickBlockEntity cropEntity, ServerLevel level, BlockPos pos, Item seedItem, Consumer<ItemStack> output) {
-        int segments = Math.min(1 + cropEntity.getStage() / 3, 3);
-        int yieldBonus = cropEntity.getYield() / 3;
-
-        int totalDrops = segments * (1 + yieldBonus);
-        ItemStack drop = new ItemStack(seedItem, totalDrops);
-        output.accept(drop);
-
-        ItemStack geneticSeed = getGenomeSeed(cropEntity, seedItem);
-        output.accept(geneticSeed);
+    private void harvestStackingPlant(Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
+        output.accept(new ItemStack(seedItem, 1 + yieldBonus));
     }
 
     public void drop(String reason, CropStickBlockEntity cropEntity) {

@@ -3,9 +3,12 @@ package com.mrpup.agrigen.plant;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
+
+import static com.mrpup.agrigen.plant.PlantRegistry.getType;
 
 public class AllHelper {
 
@@ -37,4 +40,42 @@ public class AllHelper {
             "speciesId", "growSpeed", "resistance", "yield", "dayCycleGrow", "minTemp", "maxTemp", "effect"
     };
 
+    public static boolean isPlant(Item item) {
+        return getType(item) != null;
+    }
+
+    public static boolean isCrop(Item item) {
+        return getType(item) == PlantRegistry.PlantType.CROP;
+    }
+
+    /*
+    public static boolean isStem(Item item) {
+        return getType(item) == PlantType.STEM;
+    }
+
+     */
+
+    public static boolean isNetherWart(Item item) {
+        return getType(item) == PlantRegistry.PlantType.NETHER_WART;
+    }
+
+    public static boolean isStackingPlant(Item item) {
+        return getType(item) == PlantRegistry.PlantType.STACKING;
+    }
+
+    public static boolean isMushroom(Item item) {
+        return getType(item) == PlantRegistry.PlantType.MUSHROOM;
+    }
+
+    public static boolean isFungus(Item item) {
+        return getType(item) == PlantRegistry.PlantType.FUNGUS;
+    }
+
+    public static boolean isSapling(Item item) {
+        return getType(item) == PlantRegistry.PlantType.SAPLING;
+    }
+
+    public static boolean isFlower(Item item) {
+        return getType(item) == PlantRegistry.PlantType.FLOWER;
+    }
 }

@@ -19,6 +19,9 @@ import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.common.FarmlandWaterManager;
+import net.neoforged.neoforge.common.ticket.AABBTicket;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
@@ -38,6 +41,9 @@ public class AutoFarmerTile extends MachineBlockTile {
     private final FluidTankComponent waterTank;
 
     private int scanCooldown = 0;
+
+    private AABBTicket waterTicket;
+    private int ticketRadiusXZ = -1;
 
     public AutoFarmerTile(BlockPos pos, BlockState state) {
         super(ModBlocks.AUTO_FARMER.getBlockEntityType(), pos, state, 99999, 99999, 1, ProgressTypes.ProgressType.ARROW);
@@ -97,10 +103,13 @@ public class AutoFarmerTile extends MachineBlockTile {
                         if (getWaterTank().getTank().getFluidAmount() >= 5) {
                             BlockState state = level.getBlockState(targetPos);
                             if (state.getBlock() instanceof FarmBlock) {
-                                if (state.getValue(FarmBlock.MOISTURE) <= 7) {
+                                if (state.getValue(FarmBlock.MOISTURE) < 7) {
                                     level.setBlock(targetPos, state.setValue(FarmBlock.MOISTURE, 7), 2);
-
-                                    FluidStack drainStack = new FluidStack(Fluids.WATER.getSource(), 5);
+                                    FluidStack drainStack = new FluidStack(Fluids.WATER.getSource(), 2);
+                                    getWaterTank().getTank().drain(drainStack, IFluidHandler.FluidAction.EXECUTE);
+                                } else {
+                                    updateWaterTicket(level, center);
+                                    FluidStack drainStack = new FluidStack(Fluids.WATER.getSource(), 1);
                                     getWaterTank().getTank().drain(drainStack, IFluidHandler.FluidAction.EXECUTE);
                                 }
                             }
@@ -109,6 +118,29 @@ public class AutoFarmerTile extends MachineBlockTile {
                 }
             }
         }
+    }
+
+    private void updateWaterTicket(ServerLevel level, BlockPos center) {
+        int r = getEffectiveRadiusXZ();
+        if (waterTicket == null || !waterTicket.isValid() || r != ticketRadiusXZ) {
+            clearWaterTicket();
+            AABB area = new AABB(center).inflate(r, RADIUS_Y, r);
+            waterTicket = FarmlandWaterManager.addAABBTicket(level, area);
+            ticketRadiusXZ = r;
+        }
+    }
+
+    private void clearWaterTicket() {
+        if (waterTicket != null) {
+            waterTicket.invalidate();
+            waterTicket = null;
+        }
+    }
+
+    @Override
+    public void setRemoved() {
+        clearWaterTicket();
+        super.setRemoved();
     }
 
     private void tendCrop(ServerLevel level, BlockPos pos, CropStickBlockEntity cropEntity, CropStickBlock cropBlock) {

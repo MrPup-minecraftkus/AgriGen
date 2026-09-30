@@ -3,6 +3,7 @@ package com.mrpup.agrigen.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrpup.agrigen.AgriGen;
 import com.mrpup.agrigen.block.crop.entity.CropStickBlockEntity;
+import com.mrpup.agrigen.plant.AllHelper;
 import com.mrpup.agrigen.plant.PlantRegistry;
 import com.mrpup.clumapi.helper.ItemHelper;
 import net.minecraft.client.Minecraft;
@@ -13,13 +14,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEntity> {
@@ -46,20 +44,20 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
         renderStandaloneModel(getStickModel(entity.getCropStickVariant()), poseStack, bufferSource, packedLight, packedOverlay);
 
         if (entity.hasSeed()) {
-            Item seedItem = resolveItem(entity.getSeedId());
+            Item seedItem = ItemHelper.getItemFromString(entity.getSeedId());
 
             if (seedItem != null) {
-                if (isSapling(seedItem)) {
+                if (AllHelper.isSapling(seedItem)) {
                     renderSaplingSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                } else if (isFlower(seedItem.getDefaultInstance())) {
+                } else if (AllHelper.isFlower(seedItem)) {
                     renderFlowerCluster(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                } else if (isStackingPlant(seedItem)) {
+                } else if (AllHelper.isStackingPlant(seedItem)) {
                     renderStackingPlantSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                } else if (isMushroom(seedItem)) {
+                } else if (AllHelper.isMushroom(seedItem)) {
                     renderMushroomSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                } else if (PlantRegistry.isStemCrop(entity.getSeedId())) {
+                } /* else if (AllHelper.isStemCrop(entity.getSeedId())) {
                     renderStemAndFruitSmooth(entity, poseStack, bufferSource, packedLight, packedOverlay);
-                } else {
+                } */ else {
                     BlockState cropState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
                     if (cropState != null) {
                         renderBlockState(cropState, poseStack, bufferSource, packedLight, packedOverlay);
@@ -83,8 +81,6 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
             plantState = Blocks.RED_MUSHROOM.defaultBlockState();
         } else if (seedItem == Items.BROWN_MUSHROOM) {
             plantState = Blocks.BROWN_MUSHROOM.defaultBlockState();
-        } else if (seedItem == Items.BAMBOO) {
-            plantState = Blocks.BAMBOO.defaultBlockState();
         } else {
             plantState = Blocks.RED_MUSHROOM.defaultBlockState();
         }
@@ -113,7 +109,7 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
         } else if (seedItem == Items.CACTUS) {
             plantState = Blocks.CACTUS.defaultBlockState();
         } else {
-            plantState = Blocks.CACTUS.defaultBlockState();
+            plantState = Blocks.BAMBOO.defaultBlockState();
         }
 
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(plantState);
@@ -134,6 +130,8 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
                     segmentHeight, CORNER_SCALE_WITH_SEGMENTS * partialProgress);
         }
     }
+    /*
+
 
     private void renderStemAndFruitSmooth(CropStickBlockEntity entity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockState stemState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
@@ -153,6 +151,8 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
             }
         }
     }
+
+     */
 
     private float getStageBasedProgress(CropStickBlockEntity entity) {
         return Math.min((float) entity.getStage() / CropStickBlockEntity.MAX_STAGE, 1f);
@@ -254,31 +254,5 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
             return blockItem.getBlock().defaultBlockState();
         }
         return null;
-    }
-
-
-    private boolean isSapling(Item item) {
-        return item instanceof BlockItem blockItem && blockItem.getBlock() instanceof SaplingBlock;
-    }
-
-    private boolean isStackingPlant(Item item) {
-        return item == Items.SUGAR_CANE || item == Items.CACTUS;
-    }
-
-    private boolean isMushroom(Item item) {
-        return item == Items.BROWN_MUSHROOM || item == Items.RED_MUSHROOM || item == Items.BAMBOO;
-    }
-
-    private boolean isFlower(ItemStack item) {
-        return item.is(ItemTags.FLOWERS);
-    }
-
-    private Item resolveItem(String seedId) {
-        try {
-            ResourceLocation itemId = ResourceLocation.parse(seedId);
-            return ItemHelper.getItemFromLoc(itemId);
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

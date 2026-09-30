@@ -30,7 +30,7 @@ Breed the best genes and crossbreed Plants!
 [[dependencies.${mod_id}]]
     modId="clumapi"
     type="required"
-    versionRange=">=1.0.1"
+    versionRange=">=1.0.2"
     ordering="NONE"
     side="BOTH"
 

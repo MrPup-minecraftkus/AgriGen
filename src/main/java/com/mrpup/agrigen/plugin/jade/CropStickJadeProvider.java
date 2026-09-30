@@ -36,8 +36,6 @@ public enum CropStickJadeProvider implements IBlockComponentProvider, IServerDat
 
         int stage = crop.getStage();
         int maxStage = CropStickBlockEntity.MAX_STAGE;
-        int ticksPerStage = crop.getTicksPerStage();
-        int growthTicks = crop.getGrowthTicks();
 
         data.putInt("stage", stage);
         data.putInt("maxStage", maxStage);
@@ -47,12 +45,8 @@ public enum CropStickJadeProvider implements IBlockComponentProvider, IServerDat
             return;
         }
 
-        int ticksIntoStage = growthTicks - stage * ticksPerStage;
-        if (stage == 1) ticksIntoStage = growthTicks;
-        float progress = ticksPerStage > 0 ? Math.min(1f, Math.max(0f, ticksIntoStage / (float) ticksPerStage)) : 0f;
-
         data.putBoolean("fullyGrown", false);
-        data.putFloat("progressToNext", progress);
+        data.putFloat("progressToNext",  crop.getStageProgress());
     }
 
     @Override

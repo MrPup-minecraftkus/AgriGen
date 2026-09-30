@@ -66,6 +66,9 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
                     entity.fertilizerBonus = 2f;
                     entity.setFertilizer(-1);
                     entity.setChanged();
+                } else {
+                    entity.fertilizerBonus = 1f;
+                    entity.setChanged();
                 }
 
                 float growSpeedEffect = entity.getGrowSpeedBonusFromGene() * entity.effectGrowthMultiplier *  entity.fertilizerBonus;
@@ -109,16 +112,14 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
         if (res > 0 && !entity.isWeed) {
             int scaled = 10000 * res * res * GLOBAL_MULTIPLIER;
             if (scaled > 0 && level.getRandom().nextInt(scaled) < 1) {
-                if (entity.resistance == GenesConfig.resistance) {
-                    return;
+                if (entity.resistance != GenesConfig.resistance) {
+                    if (entity.hasHerbicide()) {
+                        entity.setHerbicide(entity.getHerbicide() - 1);
+                    } else {
+                        entity.setWeed();
+                        entity.setChanged();
+                    }
                 }
-                if (entity.hasHerbicide()) {
-                    entity.setHerbicide(-1);
-                    return;
-                }
-                entity.isWeed = true;
-                entity.removeSeed();
-                entity.setChanged();
             }
         }
 
@@ -135,15 +136,14 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
         if (res > 0 && !entity.isWeed()) {
             int scaled = 5000 * res * res * GLOBAL_MULTIPLIER;
             if (scaled > 0 && level.getRandom().nextInt(scaled) < 1) {
-                if (entity.resistance == GenesConfig.resistance) {
-                    return;
+                if (entity.resistance != GenesConfig.resistance) {
+                    if (entity.hasHerbicide()) {
+                        entity.setHerbicide(entity.getHerbicide() - 1);
+                    } else {
+                        CrossbreedHelper.spreadWeed(level, pos, entity);
+                        entity.setChanged();
+                    }
                 }
-                if (entity.hasHerbicide()) {
-                    entity.setHerbicide(entity.getHerbicide() - 1);
-                    return;
-                }
-                CrossbreedHelper.spreadWeed(level, pos, entity);
-                entity.setChanged();
             }
         }
 
@@ -272,6 +272,19 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
     public int getStage() {
         syncToClient();
         return Math.max(1, Math.min(this.growthTicks / getTicksPerStage(), MAX_STAGE));
+    }
+
+    public float getStageProgress() {
+        int tps = getTicksPerStage();
+        if (tps <= 0) return 0f;
+
+        int stage = Math.max(1, Math.min(this.growthTicks / tps, MAX_STAGE));
+        if (stage >= MAX_STAGE) return 1f;
+
+        int start  = (stage == 1) ? 0 : stage * tps;
+        int length = (stage == 1) ? 2 * tps : tps;
+
+        return Math.min(1f, Math.max(0f, (this.growthTicks - start) / (float) length));
     }
 
     public boolean isFullyGrown() {

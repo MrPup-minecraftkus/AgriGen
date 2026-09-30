@@ -1,3 +1,8 @@
+# Version 1.0.2
+
+- AutoFarmer moisture system reworked
+- Bug Fixes
+
 # Version 1.0.1
 
 - The plant growth system has been reworked
