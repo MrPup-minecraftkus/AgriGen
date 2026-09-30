@@ -1,3 +1,8 @@
+# Version 1.0.3
+
+- Now you can grow melons, pumpkins, and sweet berries
+- Bug Fixes
+
 # Version 1.0.2
 
 - AutoFarmer moisture system reworked

@@ -13,10 +13,6 @@ import static com.mrpup.agrigen.plant.PlantRegistry.getType;
 public class AllHelper {
 
     public static boolean isPlantable(ItemStack stack) {
-        if (stack.is(Items.MELON_SEEDS) || stack.is(Items.PUMPKIN_SEEDS)) {
-            return false;
-        }
-
         if (stack.is(Tags.Items.SEEDS)
                 || stack.is(ItemTags.FLOWERS)
                 || stack.is(ItemTags.SAPLINGS)
@@ -25,7 +21,8 @@ public class AllHelper {
                 || stack.is(Items.SUGAR_CANE)
                 || stack.is(Items.BROWN_MUSHROOM)
                 || stack.is(Items.RED_MUSHROOM)
-                || stack.is(Items.CACTUS)) {
+                || stack.is(Items.CACTUS)
+                || stack.is(Items.SWEET_BERRIES)) {
             return true;
         }
 
@@ -48,12 +45,13 @@ public class AllHelper {
         return getType(item) == PlantRegistry.PlantType.CROP;
     }
 
-    /*
     public static boolean isStem(Item item) {
-        return getType(item) == PlantType.STEM;
+        return getType(item) == PlantRegistry.PlantType.STEM;
     }
 
-     */
+    public static boolean isBerries(Item item) {
+        return getType(item) == PlantRegistry.PlantType.BERRIES;
+    }
 
     public static boolean isNetherWart(Item item) {
         return getType(item) == PlantRegistry.PlantType.NETHER_WART;

@@ -50,6 +50,7 @@ public class CrossbreedRecipeManager extends SimpleJsonResourceReloadListener {
                 int chance = json.has("chance") ? json.get("chance").getAsInt() : 10;
 
                 if (chance <= 0) {
+                    skipped++;
                     LOGGER.info("Agrigen: crossbreed recipe {} has invalid chance {}, skipping", entry.getKey(), chance);
                     continue;
                 }

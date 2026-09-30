@@ -6,6 +6,7 @@ import com.mrpup.agrigen.plant.AllHelper;
 import com.mrpup.agrigen.plant.PlantDropHelper;
 import com.mrpup.agrigen.genetics.GenomeDefaults;
 import com.mrpup.agrigen.item.ModItems;
+import com.mrpup.agrigen.plant.PlantRegistry;
 import com.mrpup.clumapi.blocks.ComponentBlock;
 import com.mrpup.clumapi.helper.BlockHelper;
 import com.mrpup.clumapi.helper.ItemHelper;
@@ -73,7 +74,7 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
         if (AllHelper.isPlantable(item)) {
             if (!level.isClientSide) {
                 if (blockEntity instanceof CropStickBlockEntity cropEntity) {
-                    if (!cropEntity.hasSeed() && !cropEntity.isWeed()) {
+                    if (!cropEntity.hasSeed() && !cropEntity.isWeed() && !cropEntity.getCropStickVariant().equals("double")) {
 
                         CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
 
@@ -199,14 +200,36 @@ public class CropStickBlock extends ComponentBlock<CropStickBlockEntity> impleme
             harvestMushroom(level, pos, seedItem, yieldBonus, output);
         } else if (AllHelper.isSapling(seedItem)) {
             harvestSapling(level, pos, seedItem, yieldBonus, output);
+        } else if (AllHelper.isStem(seedItem)) {
+            harvestStem(level, pos, seedItem, yieldBonus, output);
+        } else if (AllHelper.isBerries(seedItem)) {
+            harvestBerries(level, pos, yieldBonus, output);
         } else {
             harvestCrop(level, pos, seedItem, yieldBonus, output);
         }
 
         output.accept(getGenomeSeed(cropEntity, seedItem));
 
+        if (AllHelper.isBerries(seedItem)) {
+            cropEntity.setGrowthTicks(2500);
+        } else {
+            cropEntity.setGrowthTicks(0);
+        }
+
         cropEntity.setFullyGrown(false);
-        cropEntity.setGrowthTicks(0);
+    }
+
+    private void harvestStem(ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {
+        Block fruit = PlantRegistry.getFruit(seedItem);
+        if (fruit == null) return;
+
+        dropLootFromBlock(level, pos, fruit.defaultBlockState(), 1 + yieldBonus, output);
+    }
+
+    private void harvestBerries(ServerLevel level, BlockPos pos, int yieldBonus, Consumer<ItemStack> output) {
+        BlockState grownBush = Blocks.SWEET_BERRY_BUSH.defaultBlockState().setValue(SweetBerryBushBlock.AGE, 3);
+
+        dropLootFromBlock(level, pos, grownBush, 1 + yieldBonus, output);
     }
 
     private void harvestCrop(ServerLevel level, BlockPos pos, Item seedItem, int yieldBonus, Consumer<ItemStack> output) {

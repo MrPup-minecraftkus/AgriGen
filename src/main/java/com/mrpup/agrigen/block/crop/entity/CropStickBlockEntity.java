@@ -168,6 +168,7 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
 
     public void setWeed() {
         this.isWeed = true;
+        setCropStickVariant("single");
         this.removeSeed();
         this.setChanged();
         syncToClient();
@@ -199,6 +200,7 @@ public class CropStickBlockEntity extends ComponentBlockEntity {
     }
 
     public void setSeed(String id) {
+        setCropStickVariant("single");
         this.speciesId = id;
         this.seedId = id;
         this.hasSeed = true;

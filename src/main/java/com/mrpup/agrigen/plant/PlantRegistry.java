@@ -17,7 +17,8 @@ public class PlantRegistry {
 
     public enum PlantType {
         CROP,
-        //STEM,
+        BERRIES,
+        STEM,
         NETHER_WART,
         STACKING,
         MUSHROOM,
@@ -28,27 +29,35 @@ public class PlantRegistry {
 
     private static final Map<Item, PlantType> TYPES = new HashMap<>();
     private static final Map<Item, Block> SEED_TO_CROP_CACHE = new HashMap<>();
-    //private static final Map<Item, Block> SEED_TO_FRUIT_CACHE = new HashMap<>();
+    private static final Map<Item, Block> SEED_TO_FRUIT_CACHE = new HashMap<>();
+    private static final Map<Block, Block> STEM_TO_FRUIT = new HashMap<>();
 
     private static boolean initialized = false;
+
+    public static void registerStemFruit(Block stem, Block fruit) {
+        STEM_TO_FRUIT.put(stem, fruit);
+    }
 
     public static void register() {
         if (initialized) return;
         initialized = true;
 
+        registerStemFruit(Blocks.PUMPKIN_STEM, Blocks.PUMPKIN);
+        registerStemFruit(Blocks.MELON_STEM, Blocks.MELON);
+
         for (Block block : BuiltInRegistries.BLOCK) {
             if (block instanceof CropBlock) {
                 registerBlockPlant(block, PlantType.CROP);
-            } /*
-            else if (block instanceof StemBlock stem) {
-                Block fruit = safeResolveFruit(stem);
+            } else if (block instanceof StemBlock) {
+                Block fruit = STEM_TO_FRUIT.get(block);
                 if (fruit != null) {
-                    Item seed = registerBlockPlant(block, PlantType.STEM, true);
+                    Item seed = registerBlockPlant(block, PlantType.STEM);
                     if (seed != null) SEED_TO_FRUIT_CACHE.put(seed, fruit);
                 }
-
-            } */ else if (block instanceof NetherWartBlock) {
+            } else if (block instanceof NetherWartBlock) {
                 registerBlockPlant(block, PlantType.NETHER_WART);
+            } else if (block instanceof SweetBerryBushBlock) {
+                registerBlockPlant(block, PlantType.BERRIES);
             }
         }
 
@@ -59,8 +68,11 @@ public class PlantRegistry {
         registerPlant(Items.BROWN_MUSHROOM, PlantType.MUSHROOM);
         registerPlant(Items.RED_MUSHROOM, PlantType.MUSHROOM);
 
+        /*
         registerPlant(Items.CRIMSON_FUNGUS, PlantType.FUNGUS);
         registerPlant(Items.WARPED_FUNGUS, PlantType.FUNGUS);
+         */
+        registerPlant(Items.SWEET_BERRIES, PlantType.BERRIES);
     }
 
     public static void registerPlant(Item item, PlantType type) {
@@ -69,13 +81,19 @@ public class PlantRegistry {
 
     @Nullable
     private static Item registerBlockPlant(Block block, PlantType type) {
-        ItemStack seedStack = block.getCloneItemStack(block.defaultBlockState(), null, null, null, null);
-        if (seedStack.isEmpty()) return null;
+        Item seed = block.asItem();
+        if (seed == Items.AIR) {
+            return null;
+        }
 
-        Item seed = seedStack.getItem();
         TYPES.put(seed, type);
         SEED_TO_CROP_CACHE.put(seed, block);
         return seed;
+    }
+
+    @Nullable
+    public static Block getFruit(Item seed) {
+        return SEED_TO_FRUIT_CACHE.get(seed);
     }
 
     public static PlantType getType(Item item) {
@@ -97,20 +115,23 @@ public class PlantRegistry {
 
         if (cropBlock instanceof CropBlock crop) {
             int maxAge = crop.getMaxAge();
-            int scaledAge = Math.round((float) ourStage / CropStickBlockEntity.MAX_STAGE * maxAge);
-            scaledAge = Math.min(scaledAge, maxAge);
-            return crop.getStateForAge(scaledAge);
-        } /*else if (cropBlock instanceof StemBlock stem) {
-                int scaledAge = Math.min(ourStage, 7);
-                return stem.defaultBlockState().setValue(StemBlock.AGE, scaledAge);
-            }
-            */ else if (cropBlock instanceof NetherWartBlock crop) {
-            int maxAge = 3;
-            int scaledAge = Math.round((float) ourStage / CropStickBlockEntity.MAX_STAGE * maxAge);
-            scaledAge = Math.min(scaledAge, maxAge);
-            return crop.defaultBlockState().setValue(NetherWartBlock.AGE, scaledAge);
+            return crop.getStateForAge(scale(ourStage, maxAge));
+        } else if (cropBlock instanceof StemBlock stem) {
+            return stem.defaultBlockState()
+                    .setValue(StemBlock.AGE, scale(ourStage, StemBlock.MAX_AGE));
+        } else if (cropBlock instanceof NetherWartBlock wart) {
+            return wart.defaultBlockState()
+                    .setValue(NetherWartBlock.AGE, scale(ourStage, 3));
+        } else if (cropBlock instanceof SweetBerryBushBlock bush) {
+            return bush.defaultBlockState()
+                    .setValue(SweetBerryBushBlock.AGE, scale(ourStage, 3));
         }
 
         return cropBlock.defaultBlockState();
+    }
+
+    private static int scale(int ourStage, int maxAge) {
+        int scaled = Math.round((float) ourStage / CropStickBlockEntity.MAX_STAGE * maxAge);
+        return Math.max(0, Math.min(scaled, maxAge));
     }
 }

@@ -66,7 +66,7 @@ public class GenomeDefaults {
     public static void bootstrap() {
         registerSeed(Items.WHEAT_SEEDS, 5, 3, 3, 1, -1, 1, "solar");
         registerSeed(Items.CARROT, 3, 4, 4, 1, -1, 1, "social");
-        registerSeed(Items.POTATO, 2, 5, 3, 1, -2, 0, "social");
+        registerSeed(Items.POTATO, 2, 5, 3, 1, -1, 1, "social");
         registerSeed(Items.CACTUS, 1, 6, 2, 1, 1, 2, "solitary");
         registerSeed(Items.SUGAR_CANE, 4, 3, 3, 1, 0, 2);
         registerSeed(Items.BROWN_MUSHROOM, 2, 4, 2, 2, -2, 0);
@@ -79,6 +79,9 @@ public class GenomeDefaults {
         registerSeed(Items.DARK_OAK_SAPLING, 2, 9, 4, 1, 0, 2, "solitary");
         registerSeed(Items.JUNGLE_SAPLING, 2, 8, 5, 1, 0, 2, "solitary");
         registerSeed(Items.NETHER_WART, 6, 4, 4, 2, 1, 2);
+        registerSeed(Items.SWEET_BERRIES, 5, 4, 5, 1, -2, 1, "social");
+        registerSeed(Items.MELON_SEEDS, 3, 6, 5, 1, -1, 1, "solitary");
+        registerSeed(Items.PUMPKIN_SEEDS, 3, 6, 5, 1, -1, 1, "solitary");
 
         if (ModList.get().isLoaded("farmersdelight")) {
             GenomeDefaultsDelight.bootstrap();

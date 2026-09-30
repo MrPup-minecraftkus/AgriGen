@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -26,6 +27,7 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
     private static final float CORNER_OFFSET = 2.5f / 16f;
     private static final float CORNER_SCALE = 1.1f;
     private static final float CORNER_SCALE_WITH_SEGMENTS = 0.4f;
+    private static final float FRUIT_MAX_SCALE = 0.6f;
 
     public CropStickRenderer(BlockEntityRendererProvider.Context context) {
 
@@ -55,9 +57,9 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
                     renderStackingPlantSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
                 } else if (AllHelper.isMushroom(seedItem)) {
                     renderMushroomSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                } /* else if (AllHelper.isStemCrop(entity.getSeedId())) {
-                    renderStemAndFruitSmooth(entity, poseStack, bufferSource, packedLight, packedOverlay);
-                } */ else {
+                } else if (AllHelper.isStem(seedItem)) {
+                    renderFruitSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
+                }  else {
                     BlockState cropState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
                     if (cropState != null) {
                         renderBlockState(cropState, poseStack, bufferSource, packedLight, packedOverlay);
@@ -130,29 +132,16 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
                     segmentHeight, CORNER_SCALE_WITH_SEGMENTS * partialProgress);
         }
     }
-    /*
 
+    private void renderFruitSmooth(CropStickBlockEntity entity, Item seedItem, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        float progress = getStageBasedProgress(entity);
+        if (progress <= 0.02f) return;
 
-    private void renderStemAndFruitSmooth(CropStickBlockEntity entity, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        BlockState stemState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
-        if (stemState != null) {
-            renderBlockState(stemState, poseStack, bufferSource, packedLight, packedOverlay);
-        }
+        Block fruit = PlantRegistry.getFruit(seedItem);
+        if (fruit == null) return;
 
-        if (entity.isFullyGrown()) {
-            BlockState fruitState = PlantRegistry.resolveFruitState(entity.getSeedId());
-            if (fruitState != null) {
-                float fruitProgress = entity.getFruitGrowthProgress();
-                float scale = 0.5f * fruitProgress;
-
-                if (scale > 0.02f) {
-                    renderScaledBlockState(fruitState, scale, poseStack, bufferSource, packedLight, packedOverlay);
-                }
-            }
-        }
+        renderScaledBlockState(fruit.defaultBlockState(), progress * FRUIT_MAX_SCALE, poseStack, bufferSource, packedLight, packedOverlay);
     }
-
-     */
 
     private float getStageBasedProgress(CropStickBlockEntity entity) {
         return Math.min((float) entity.getStage() / CropStickBlockEntity.MAX_STAGE, 1f);
