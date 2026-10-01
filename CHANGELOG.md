@@ -1,3 +1,7 @@
+# Version 1.0.4
+
+- Bug Fixes
+
 # Version 1.0.3
 
 - Now you can grow melons, pumpkins, and sweet berries

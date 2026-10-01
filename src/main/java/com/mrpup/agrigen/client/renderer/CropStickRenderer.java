@@ -25,6 +25,7 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
 
     private static final int MAX_SEGMENTS = 3;
     private static final float CORNER_OFFSET = 2.5f / 16f;
+    private static final float CORNER_Y_OFFSET = -1f / 16f;
     private static final float CORNER_SCALE = 1.1f;
     private static final float CORNER_SCALE_WITH_SEGMENTS = 0.4f;
     private static final float FRUIT_MAX_SCALE = 0.6f;
@@ -59,7 +60,10 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
                     renderMushroomSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
                 } else if (AllHelper.isStem(seedItem)) {
                     renderFruitSmooth(entity, seedItem, poseStack, bufferSource, packedLight, packedOverlay);
-                }  else {
+                } else if (AllHelper.isBerries(seedItem)) {
+                    BlockState berriesState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
+                    renderBerries(berriesState, poseStack, bufferSource, packedLight, packedOverlay);
+                } else {
                     BlockState cropState = PlantRegistry.resolveGrowthState(entity.getSeedId(), entity.getStage());
                     if (cropState != null) {
                         renderBlockState(cropState, poseStack, bufferSource, packedLight, packedOverlay);
@@ -159,7 +163,7 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
                                      float segmentHeight, float scale) {
         for (float[] corner : CORNER_POSITIONS) {
             poseStack.pushPose();
-            poseStack.translate(corner[0], segmentHeight, corner[1]);
+            poseStack.translate(corner[0], segmentHeight + CORNER_Y_OFFSET, corner[1]);
             poseStack.scale(scale, scale, scale);
             poseStack.translate(-0.5, 0, -0.5);
             renderModelRaw(model, state, poseStack, bufferSource, packedLight, packedOverlay);
@@ -181,9 +185,20 @@ public class CropStickRenderer implements BlockEntityRenderer<CropStickBlockEnti
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
 
         poseStack.pushPose();
-        poseStack.translate(0.5, 0, 0.5);
+        poseStack.translate(0.5, CORNER_Y_OFFSET, 0.5);
         poseStack.scale(scale, scale, scale);
-        poseStack.translate(-0.5, 0, -0.5);
+        poseStack.translate(-0.5, CORNER_Y_OFFSET, -0.5);
+
+        renderModelRaw(model, state, poseStack, bufferSource, packedLight, packedOverlay);
+
+        poseStack.popPose();
+    }
+
+    private void renderBerries(BlockState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+
+        poseStack.pushPose();
+        poseStack.translate(0, CORNER_Y_OFFSET, 0);
 
         renderModelRaw(model, state, poseStack, bufferSource, packedLight, packedOverlay);
 

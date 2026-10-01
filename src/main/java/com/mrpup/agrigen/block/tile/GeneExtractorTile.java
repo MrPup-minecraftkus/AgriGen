@@ -97,7 +97,7 @@ public class GeneExtractorTile extends MachineBlockTile {
 
         resultTag.putString("geneType", chosenGene);
 
-        if ("speciesId".equals(chosenGene)) {
+        if ("speciesId".equals(chosenGene) || "effect".equals(chosenGene)) {
             String geneValueString = genome.getString(chosenGene);
             resultTag.putString("geneValue", geneValueString);
         } else {
