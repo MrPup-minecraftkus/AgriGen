@@ -10,4 +10,4 @@ plugins {
 
 rootProject.name = 'agrigen-neoforge-26.1.2'
 
-includeBuild("../../clumapi/clumapi-neoforge-26.1.2")
+//includeBuild("../../clumapi/clumapi-neoforge-26.1.2")

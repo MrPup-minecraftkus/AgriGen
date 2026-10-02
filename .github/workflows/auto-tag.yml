@@ -28,10 +28,6 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create source.zip
-        if: steps.tag.outputs.exists == 'false'
-        run: git archive --format=zip -o source.zip HEAD
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -49,7 +45,5 @@ jobs:
         with:
           tag_name: v${{ steps.ver.outputs.version }}
           name: v${{ steps.ver.outputs.version }}
-          files: |
-            source.zip
-            build/libs/*.jar
+          files: build/libs/*.jar
           generate_release_notes: true
