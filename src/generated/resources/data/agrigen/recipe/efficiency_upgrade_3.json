@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:diamond",
+    "B": "minecraft:redstone",
+    "S": "agrigen:efficiency_upgrade_2"
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "id": "agrigen:efficiency_upgrade_3"
+  }
+}

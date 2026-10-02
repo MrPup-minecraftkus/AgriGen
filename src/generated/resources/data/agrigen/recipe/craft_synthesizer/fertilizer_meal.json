@@ -1,0 +1,14 @@
+{
+  "type": "agrigen:craft_synthesizer",
+  "fluid_input": {
+    "amount": 1000,
+    "ingredient": "minecraft:water"
+  },
+  "input_1": "minecraft:bone_meal",
+  "input_2": "minecraft:rotten_flesh",
+  "input_3": "minecraft:spider_eye",
+  "input_4": "minecraft:dirt",
+  "output": {
+    "id": "agrigen:fertilizer"
+  }
+}

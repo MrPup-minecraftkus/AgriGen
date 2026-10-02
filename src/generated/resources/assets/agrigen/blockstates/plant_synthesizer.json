@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "agrigen:block/plant_synthesizer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "agrigen:block/plant_synthesizer"
+    },
+    "facing=south": {
+      "model": "agrigen:block/plant_synthesizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "agrigen:block/plant_synthesizer",
+      "y": 270
+    }
+  }
+}

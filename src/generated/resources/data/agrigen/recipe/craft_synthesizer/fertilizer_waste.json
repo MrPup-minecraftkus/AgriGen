@@ -1,0 +1,15 @@
+{
+  "type": "agrigen:craft_synthesizer",
+  "fluid_input": {
+    "amount": 1000,
+    "ingredient": "minecraft:water"
+  },
+  "input_1": "agrigen:genetic_waste",
+  "input_2": "minecraft:bone_meal",
+  "input_3": "minecraft:bone_meal",
+  "input_4": "minecraft:dirt",
+  "output": {
+    "count": 3,
+    "id": "agrigen:fertilizer"
+  }
+}

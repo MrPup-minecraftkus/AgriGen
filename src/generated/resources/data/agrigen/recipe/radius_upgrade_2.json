@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:gold_ingot",
+    "B": "minecraft:gunpowder",
+    "S": "agrigen:radius_upgrade_1"
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "id": "agrigen:radius_upgrade_2"
+  }
+}

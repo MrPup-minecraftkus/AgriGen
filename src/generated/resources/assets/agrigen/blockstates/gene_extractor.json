@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "agrigen:block/gene_extractor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "agrigen:block/gene_extractor"
+    },
+    "facing=south": {
+      "model": "agrigen:block/gene_extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "agrigen:block/gene_extractor",
+      "y": 270
+    }
+  }
+}

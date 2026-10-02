@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "agrigen:block/dna_extractor"
+  }
+}

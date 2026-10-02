@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:hopper",
+    "M": "minecraft:crafter",
+    "P": "minecraft:iron_ingot",
+    "S": "minecraft:hopper"
+  },
+  "pattern": [
+    "PGP",
+    "SMS",
+    "PSP"
+  ],
+  "result": {
+    "id": "agrigen:craft_synthesizer"
+  }
+}

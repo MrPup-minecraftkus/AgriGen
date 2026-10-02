@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:redstone",
+    "M": "minecraft:bucket",
+    "P": "minecraft:iron_ingot",
+    "S": "minecraft:piston"
+  },
+  "pattern": [
+    "PGP",
+    "PMP",
+    "PSP"
+  ],
+  "result": {
+    "id": "agrigen:dna_extractor"
+  }
+}

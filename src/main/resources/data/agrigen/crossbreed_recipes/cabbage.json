@@ -1,0 +1,6 @@
+{
+  "parent1": "minecraft:wheat_seeds",
+  "parent2": "minecraft:melon_seeds",
+  "result": "farmersdelight:cabbage_seeds",
+  "chance": 20
+}

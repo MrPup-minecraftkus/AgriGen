@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:lapis_lazuli",
+    "B": "minecraft:redstone",
+    "S": "agrigen:blank_upgrade"
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "id": "agrigen:efficiency_upgrade_1"
+  }
+}

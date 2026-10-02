@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:lapis_lazuli",
+    "B": "minecraft:gunpowder",
+    "S": "agrigen:blank_upgrade"
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "id": "agrigen:radius_upgrade_1"
+  }
+}

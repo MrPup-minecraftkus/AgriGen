@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "agrigen:blank_gene_sample",
+    "B": "minecraft:redstone",
+    "S": "minecraft:diamond"
+  },
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "result": {
+    "id": "agrigen:genetic_template"
+  }
+}

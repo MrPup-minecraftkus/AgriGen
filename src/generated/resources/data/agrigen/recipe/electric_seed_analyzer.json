@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:redstone",
+    "M": "agrigen:seed_analyzer",
+    "P": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "PGP",
+    "PMP",
+    "PPP"
+  ],
+  "result": {
+    "id": "agrigen:electric_seed_analyzer"
+  }
+}
