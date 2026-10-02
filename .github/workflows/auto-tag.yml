@@ -36,7 +36,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 25
-      - run: ./gradlew build
+          cache: gradle
+
+      - name: Build
+        run: |
+          chmod +x gradlew
+          ./gradlew build
 
       - name: Create tag and release
         if: steps.tag.outputs.exists == 'false'
