@@ -29,12 +29,14 @@ jobs:
           fi
 
       - uses: actions/setup-java@v4
+        if: steps.tag.outputs.exists == 'false'
         with:
           distribution: temurin
           java-version: 25
           cache: gradle
 
       - name: Build
+        if: steps.tag.outputs.exists == 'false'
         run: |
           chmod +x gradlew
           ./gradlew build
@@ -45,5 +47,6 @@ jobs:
         with:
           tag_name: v${{ steps.ver.outputs.version }}
           name: v${{ steps.ver.outputs.version }}
+          body_path: CHANGELOG.md
           files: build/libs/*.jar
           generate_release_notes: true

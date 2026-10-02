@@ -134,7 +134,7 @@ dependencies {
     runtimeOnly "curse.maven:jade-324717:8857417"
     annotationProcessor "curse.maven:jade-324717:8857417"
 
-    implementation "curse.maven:clumapi-1679420:9038454"
+    implementation "curse.maven:clumapi-1679420:9039316"
 
     //implementation "com.mrpup.clumapi:clumapi"
 }
