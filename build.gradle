@@ -134,7 +134,7 @@ dependencies {
     runtimeOnly "curse.maven:jade-324717:8857417"
     annotationProcessor "curse.maven:jade-324717:8857417"
 
-    //implementation "com.mrpup.clumapi:clumapi"
+    implementation "com.mrpup.clumapi:clumapi"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
